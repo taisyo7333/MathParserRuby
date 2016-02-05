@@ -2,11 +2,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.2.0)
-    chronic_duration (0.10.6)
-      numerizer (~> 0.1.1)
     coderay (1.1.0)
+    diff-lcs (1.2.5)
     method_source (0.8.2)
-    numerizer (0.1.1)
     parser (2.3.0.2)
       ast (~> 2.2)
     powerpack (0.1.1)
@@ -17,6 +15,19 @@ GEM
     rainbow (2.1.0)
     rake (10.5.0)
     rcodetools (0.8.5.0)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.2)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
     rubocop (0.37.0)
       parser (>= 2.3.0.2, < 3.0)
       powerpack (~> 0.1)
@@ -28,8 +39,6 @@ GEM
       slop (~> 3.4, >= 3.4.7)
     ruby-progressbar (1.7.5)
     slop (3.6.0)
-    spec (5.3.4)
-      chronic_duration (~> 0.10.2)
     unicode-display_width (0.3.1)
 
 PLATFORMS
@@ -39,9 +48,9 @@ DEPENDENCIES
   pry
   rake
   rcodetools
+  rspec
   rubocop
   ruby-lint
-  spec
 
 BUNDLED WITH
    1.11.2

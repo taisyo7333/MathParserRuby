@@ -7,5 +7,5 @@ gem "rubocop"
 gem "ruby-lint"
 
 
-gem "spec"
+gem "rspec"
 gem "rake"
