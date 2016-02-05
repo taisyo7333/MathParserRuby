@@ -64,28 +64,28 @@ class TokenParser
         num += @look_ahead
         exec_look_ahead() # 先読み
       end
-      if @look_ahead != '.' then
-        # 整数
-        return Token.new(num)
-      end
-      
-      num += @look_ahead
-      exec_look_ahead() # 先読み
 
-      raise TokenParserError.exception('数字の字句解析に失敗しました。') unless Token.num?(@look_ahead)
-      
-      num += @look_ahead
-      exec_look_ahead() # 先読み
-
-      while Token.num?(@look_ahead) do
+      # Case in real number
+      if @look_ahead == '.' then
         num += @look_ahead
         exec_look_ahead() # 先読み
+        
+        raise TokenParserError.exception('Failure to parse real number.') unless Token.num?(@look_ahead)
+        
+        num += @look_ahead
+        exec_look_ahead() # 先読み
+        
+        while Token.num?(@look_ahead) do
+          num += @look_ahead
+          exec_look_ahead() # 先読み
+        end
       end
-      # REAL NUMBER
+
+      # REAL NUMBER or INTEGER
       return Token.new(num)
     else
       # いずれにも該当しない
-      raise TokenParserError.exception('字句解析できない入力を検出しました。')
+      raise TokenParserError.exception('Detect invalid character for TokenParser')
     end
 
   end
