@@ -77,4 +77,54 @@ RSpec.describe 'Token' do
       expect{ Token.new(nil) }.to raise_error TokenError
     end
   end
+
+  context 'Service method paren?' do
+    it 'Test "(" [Success]' do
+      expect( Token.paren?('(') ).to eq true
+    end
+    it 'Test "(" [Success]' do
+      expect( Token.paren?(')') ).to eq true
+    end
+    it 'Test "+" [Failure]' do
+      expect( Token.paren?('+') ).to eq false
+    end
+  end
+
+  context 'Service method operator?' do
+    it 'Test "+" [Success]' do
+      expect( Token.operator?('+') ).to eq true
+    end
+    it 'Test "-" [Success]' do
+      expect( Token.operator?('-') ).to eq true
+    end
+    it 'Test "*" [Success]' do
+      expect( Token.operator?('*') ).to eq true
+    end
+    it 'Test "/" [Success]' do
+      expect( Token.operator?('/') ).to eq true
+    end
+    it 'Test "@" [Failure]' do
+      expect( Token.operator?('@') ).to eq false
+    end
+  end
+  
+  context 'Service method num?' do
+    it 'Test "0" [Success]' do
+      expect( Token.num?('0') ).to eq true
+      expect( Token.num?('1') ).to eq true
+      expect( Token.num?('2') ).to eq true
+      expect( Token.num?('3') ).to eq true
+      expect( Token.num?('4') ).to eq true
+      expect( Token.num?('5') ).to eq true
+      expect( Token.num?('6') ).to eq true
+      expect( Token.num?('7') ).to eq true
+      expect( Token.num?('7') ).to eq true
+      expect( Token.num?('8') ).to eq true
+    end
+
+    it 'Test "@" [Failure]' do
+      expect( Token.num?('@') ).to eq false
+    end
+  end
 end
+

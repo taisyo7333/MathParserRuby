@@ -9,10 +9,33 @@ class Token
     @content = c
     @type = map_type(c)
   end
+  #
+  def <=>(other)
+    return  0 if @type == other.type && @content == other.concent
+    return  1 if @type < other.type
+    return -1 
+  end
 
-  
+  # Class method
+  class << self
+    def paren?(c)
+      return true if( c == "(" )
+      return true if( c == ")" )
+      false
+    end
+    def operator?(c)
+      return true if( c == "-" )
+      return true if( c == "+" )
+      return true if( c == "*" )
+      return true if( c == "/" )
+      return false
+    end
+    def num?(c)
+      return !!(c =~ /[0-9]/)
+    end   
+  end
 
-  # 
+  # Get type code from input string.
   def map_type(input)
     case input
     when '(' ; :L_PAREN
