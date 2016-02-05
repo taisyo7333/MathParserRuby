@@ -94,3 +94,6 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 # =end
 end
+
+Dir[File.join(File.dirname(__FILE__), "../app/**/*.rb")].each { |f| require f }
+
