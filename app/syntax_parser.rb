@@ -16,14 +16,6 @@ class Ast
     @op    = nil
   end
 
-  def to_s
-    if @op.nil?
-      return @left.to_s
-    elsif @op.right.nil?
-      
-    end
-  end
-
   def to_a
     [@op.to_a , @left.to_a , @right.to_a]
   end
