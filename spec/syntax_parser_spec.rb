@@ -43,7 +43,9 @@ RSpec.describe 'Syntax Parser Test' do
 
     it 'Make abstract syntax tree' do
       ast = @parser.expression      
-      # ()
+      # (+ (+ 1 2 ) 3 )
+
+      # (+ child 3)
       expect(ast.op.content).to eq("+")
       expect(ast.right.content).to eq("3")
 
@@ -54,4 +56,63 @@ RSpec.describe 'Syntax Parser Test' do
       expect(ast_1p2.right.content).to eq("2")
     end
   end
+  context 'Basic Test (1 + 2)' do
+    before do
+      input = "(1 + 2)"
+      lexer = TokenParser.new(input)
+      @parser = SyntaxParser.new(lexer)
+    end
+
+    it 'next_token' do
+      expect(@parser.next_token.content).to eq("(")
+      expect(@parser.next_token.content).to eq("1")
+      expect(@parser.next_token.content).to eq("+")
+      expect(@parser.next_token.content).to eq("2")
+      expect(@parser.next_token.content).to eq(")")
+    end
+
+    it 'Make abstract syntax tree' do
+      $stderr.puts ">>>>>>>>"
+      ast = @parser.expression      
+      $stderr.puts "<<<<<<<<"
+
+      # (+ 1 2)
+      expect(ast.left.content).to eq("1")
+      expect(ast.op.content).to eq("+")
+      expect(ast.right.content).to eq("2")
+    end
+  end
+
+=begin
+  context 'Basic Test 1 + (2 - 3)' do
+    before do
+      input = "1 + (2 - 3)"
+      lexer = TokenParser.new(input)
+      @parser = SyntaxParser.new(lexer)
+    end
+
+    it 'next_token' do
+      expect(@parser.next_token.content).to eq("1")
+      expect(@parser.next_token.content).to eq("+")
+      expect(@parser.next_token.content).to eq("(")
+      expect(@parser.next_token.content).to eq("2")
+      expect(@parser.next_token.content).to eq("-")
+      expect(@parser.next_token.content).to eq("3")      
+      expect(@parser.next_token.content).to eq(")")
+    end
+
+    it 'Make abstract syntax tree' do
+      ast = @parser.expression      
+      # (+ 1 child)
+      expect(ast.left.content).to eq("1")
+      expect(ast.op.content).to eq("+")
+
+      # (- 2 3)
+      ast_child = ast.right
+      expect(ast_child.left.content).to eq("2")
+      expect(ast_child.op.content).to eq("-")
+      expect(ast_child.right.content).to eq("3")
+    end
+  end
+=end
 end
