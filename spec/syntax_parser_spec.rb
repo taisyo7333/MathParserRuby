@@ -19,7 +19,6 @@ RSpec.describe 'Syntax Parser Test' do
 
     it 'Make abstract syntax tree' do
       ast = @parser.parse()
-
       expect(ast.left.content).to eq("1")
       expect(ast.op.content).to eq("+")
       expect(ast.right.content).to eq("2")
@@ -76,7 +75,7 @@ RSpec.describe 'Syntax Parser Test' do
       ast = @parser.parse()
 #      $stderr.puts "<<<<<<<<"
 
-      # (+ 1 2)
+#      # (+ 1 2)
       expect(ast.left.content).to eq("1")
       expect(ast.op.content).to eq("+")
       expect(ast.right.content).to eq("2")

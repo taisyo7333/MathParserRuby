@@ -58,6 +58,8 @@ class SyntaxParser
     # 演算子を期待
     token = @look_ahead
     return tree_left if token.nil?
+    return tree_left if ( token.type != :OP_PLUS && token.type != :OP_MINUS )
+
     while( token.type == :OP_PLUS || token.type == :OP_MINUS )
       next_token() # 先読み
 
@@ -73,7 +75,6 @@ class SyntaxParser
       if  (token.type == :OP_PLUS || token.type == :OP_MINUS) then
         tree_left = ast
         
-        ast_crr = ast;
         ast = Ast.new()
       end
 
@@ -82,7 +83,34 @@ class SyntaxParser
   end
 
   def term
-    factor()
+    tree_left = factor()
+
+    token = @look_ahead
+    return tree_left if token.nil?
+    return tree_left if ( token.type != :OP_MULTI && token.type != :OP_DIV )
+
+    ast = Ast.new()
+    while( token.type == :OP_MULTI || token.type == :OP_DIV )
+      next_token() # 先読み
+
+      ast.left = tree_left
+      ast.op   = token 
+
+      tree_right = factor()
+      ast.right = tree_right
+
+      # 演算子
+      token = @look_ahead
+      return ast if token.nil?
+      if (token.type == :OP_MULTI || token.type == :OP_DIV ) then
+        tree_left = ast
+        
+        ast = Ast.new();
+      end
+    end
+#    raise SyntaxParserError.exception("構文エラー#002")
+    return ast
+#    factor()
   end
   
   def factor
