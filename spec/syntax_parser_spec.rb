@@ -18,8 +18,8 @@ RSpec.describe 'Syntax Parser Test' do
     end
 
     it 'Make abstract syntax tree' do
-      root = @parser.expression      
-      ast = root.left
+      ast = @parser.expression      
+
       expect(ast.left.content).to eq("1")
       expect(ast.op.content).to eq("+")
       expect(ast.right.content).to eq("2")
@@ -42,8 +42,7 @@ RSpec.describe 'Syntax Parser Test' do
     end
 
     it 'Make abstract syntax tree' do
-      root = @parser.expression      
-      ast = root.left
+      ast = @parser.expression      
       # ()
       expect(ast.op.content).to eq("+")
       expect(ast.right.content).to eq("3")

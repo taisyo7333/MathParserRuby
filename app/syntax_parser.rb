@@ -61,10 +61,11 @@ class SyntaxParser
         
         # 演算子を期待
         @token = next_token()
-        
-        ast_crr = ast;
-        ast = Ast.new()
-        ast.left = ast_crr
+        if  (@token.type == :OP_PLUS || @token.type == :OP_MINUS) then
+          ast_crr = ast;
+          ast = Ast.new()
+          ast.left = ast_crr
+        end
       end
       # TODO
       raise SyntaxParserError.exception("構文エラー#001")
