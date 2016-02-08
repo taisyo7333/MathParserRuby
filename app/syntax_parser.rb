@@ -51,6 +51,8 @@ class SyntaxParser
     expression()
   end
 
+  # 下記構文を実装する
+  # exp    := term(('+'|'-')term)*
   def expression 
     tree_left = term()
     ast = Ast.new()
@@ -74,7 +76,6 @@ class SyntaxParser
       return ast if token.nil?
       if  (token.type == :OP_PLUS || token.type == :OP_MINUS) then
         tree_left = ast
-        
         ast = Ast.new()
       end
 
@@ -82,6 +83,8 @@ class SyntaxParser
     return ast
   end
 
+  # 下記構文を実装する
+  # term   := factor(('*'|'/')factor)*
   def term
     tree_left = factor()
 
@@ -102,17 +105,16 @@ class SyntaxParser
       # 演算子
       token = @look_ahead
       return ast if token.nil?
-      if (token.type == :OP_MULTI || token.type == :OP_DIV ) then
-        tree_left = ast
-        
-        ast = Ast.new();
-      end
+      # Ready for next loop
+      tree_left = ast
+      ast = Ast.new();
     end
-#    raise SyntaxParserError.exception("構文エラー#002")
+    raise SyntaxParserError.exception("構文エラー#002")
     return ast
-#    factor()
   end
   
+  # 下記構文を実装する
+  # factor := '('exp')' | RealNumber | Integer
   def factor
     token = @look_ahead
     if token.type == :L_PAREN  then
