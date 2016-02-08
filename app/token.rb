@@ -16,6 +16,13 @@ class Token
     return -1 
   end
 
+  def to_s
+    return "#{@type} ,#{@content}"
+  end
+  def to_a 
+    return [@type,@content]
+  end
+
   # Class method
   class << self
     def paren?(c)

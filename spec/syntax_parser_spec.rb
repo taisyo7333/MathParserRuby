@@ -74,10 +74,18 @@ RSpec.describe 'Syntax Parser Test' do
       # (+ 1 2)
 #      $stderr.puts ">>>>>>>>"
       ast = @parser.parse()
-#      $stderr.puts "<<<<<<<<"
+
       expect(ast.left.content).to eq("1")
       expect(ast.op.content).to eq("+")
       expect(ast.right.content).to eq("2")
+    end
+
+    it 'Make to_a' do
+      ast = @parser.parse()
+
+      ar = ast.to_a
+      expect(ar).to eq([[:OP_PLUS,"+"],[:INT,"1"],[:INT,"2"]])
+
     end
   end
 
@@ -110,6 +118,14 @@ RSpec.describe 'Syntax Parser Test' do
       expect(ast_child.left.content).to eq("2")
       expect(ast_child.op.content).to eq("-")
       expect(ast_child.right.content).to eq("3")
+    end
+
+    it 'Make to_a' do
+      ast = @parser.parse()
+
+      ar = ast.to_a
+      expect(ar).to eq([[:OP_PLUS,"+"],[:INT,"1"],[[:OP_MINUS,"-"],[:INT,"2"],[:INT,"3"]]])
+
     end
   end
 
@@ -171,6 +187,13 @@ RSpec.describe 'Syntax Parser Test' do
       expect(ast_child.left.content).to eq("1")
       expect(ast_child.op.content).to eq("+")
       expect(ast_child.right.content).to eq("2")
+    end
+    it 'Make to_a' do
+      ast = @parser.parse()
+
+      ar = ast.to_a
+      expect(ar).to eq([[:OP_MULTI,"*"],[[:OP_PLUS,"+"],[:INT,"1"],[:INT,"2"]],[:INT,"3"]])
+
     end
   end
 end

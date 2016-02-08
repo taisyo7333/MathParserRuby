@@ -19,12 +19,13 @@ class Ast
   def to_s
     if @op.nil?
       return @left.to_s
-    elsif @op.right?
+    elsif @op.right.nil?
+      
     end
   end
 
   def to_a
-    [@op.to_s , @left.to_s , @right.to_s]
+    [@op.to_a , @left.to_a , @right.to_a]
   end
 
 end
