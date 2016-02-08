@@ -47,14 +47,12 @@ class SyntaxParser
   end
 
   def expression 
-    $stderr.puts "++++expression++++"
     tree_left = term()
     ast = Ast.new()
     begin
       # 演算子を期待
       token = next_token()
       return tree_left if token.nil?
-      $stderr.puts "[OP]:#{token.type}:#{token.content}"
       while( token.type == :OP_PLUS || token.type == :OP_MINUS )
         ast.left = tree_left
         ast.op = token
@@ -77,7 +75,6 @@ class SyntaxParser
     rescue
     ensure
     end
-    $stderr.puts "---expression---"
     return ast
   end
 
@@ -86,23 +83,17 @@ class SyntaxParser
   end
   
   def factor
-    $stderr.puts "++++factor++++"
     token = next_token()
     if token.type == :L_PAREN  then
-      $stderr.puts "("
       tree = expression()
-
-      $stderr.puts ")"
 # 先読みしているので不要      
 #      token = next_token()
       token = @look_ahead
       if token.type != :R_PAREN then
         raise SyntaxParserError.exception('()の対応に問題があります。')
       end
-      $stderr.puts "[[factor]] #{tree.op.content},#{tree.left.content},#{tree.right.content}"
       return tree
     elsif token.type == :REAL || token.type == :INT  then
-      $stderr.puts "<factor> NUM: #{token.type}:#{token.content}"
       return token
     else
 
