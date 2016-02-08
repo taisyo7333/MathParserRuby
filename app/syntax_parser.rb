@@ -16,6 +16,17 @@ class Ast
     @op    = nil
   end
 
+  def to_s
+    if @op.nil?
+      return @left.to_s
+    elsif @op.right?
+    end
+  end
+
+  def to_a
+    [@op.to_s , @left.to_s , @right.to_s]
+  end
+
 end
 
 # 字句解析器
@@ -40,23 +51,27 @@ class SyntaxParser
     ast.left = tree_left
 
     begin
+      # 演算子を期待
       @token = next_token()
-      if( @token.type == :OP_PLUS || @token.type == :OP_MINUS ) then
+      while( @token.type == :OP_PLUS || @token.type == :OP_MINUS )
         ast.op = @token
-
         tree_right = term()
         
         ast.right = tree_right
-          
+        
         # 演算子を期待
         @token = next_token()
-      else
-
+        
+        ast_crr = ast;
+        ast = Ast.new()
+        ast.left = ast_crr
       end
-   
+      # TODO
+      raise SyntaxParserError.exception("構文エラー#001")
     rescue
     ensure
     end
+
     return ast
   end
 
