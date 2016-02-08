@@ -46,34 +46,37 @@ class SyntaxParser
     @look_ahead
   end
 
+  def parse
+    next_token() # 先読み
+    expression()
+  end
+
   def expression 
     tree_left = term()
     ast = Ast.new()
-    begin
-      # 演算子を期待
-      token = next_token()
-      return tree_left if token.nil?
-      while( token.type == :OP_PLUS || token.type == :OP_MINUS )
-        ast.left = tree_left
-        ast.op = token
 
-        tree_right = term()
-        ast.right = tree_right
+    # 演算子を期待
+    token = @look_ahead
+    return tree_left if token.nil?
+    while( token.type == :OP_PLUS || token.type == :OP_MINUS )
+      next_token() # 先読み
+
+      ast.left = tree_left
+      ast.op = token
+      
+      tree_right = term()
+      ast.right = tree_right
+      
+      # 演算子を期待
+      token = @look_ahead
+      return ast if token.nil?
+      if  (token.type == :OP_PLUS || token.type == :OP_MINUS) then
+        tree_left = ast
         
-        # 演算子を期待
-        token = next_token()
-        return ast if token.nil?
-        if  (token.type == :OP_PLUS || token.type == :OP_MINUS) then
-          tree_left = ast
-          
-          ast_crr = ast;
-          ast = Ast.new()
-        end
+        ast_crr = ast;
+        ast = Ast.new()
       end
-      # TODO
-      raise SyntaxParserError.exception("構文エラー#001")
-    rescue
-    ensure
+
     end
     return ast
   end
@@ -83,17 +86,19 @@ class SyntaxParser
   end
   
   def factor
-    token = next_token()
+    token = @look_ahead
     if token.type == :L_PAREN  then
+      next_token() # 先読み
+
       tree = expression()
-# 先読みしているので不要      
-#      token = next_token()
       token = @look_ahead
       if token.type != :R_PAREN then
         raise SyntaxParserError.exception('()の対応に問題があります。')
       end
+      next_token() # 先読み
       return tree
     elsif token.type == :REAL || token.type == :INT  then
+      next_token() # 先読み
       return token
     else
 
