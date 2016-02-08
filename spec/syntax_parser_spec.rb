@@ -83,7 +83,6 @@ RSpec.describe 'Syntax Parser Test' do
     end
   end
 
-=begin
   context 'Basic Test 1 + (2 - 3)' do
     before do
       input = "1 + (2 - 3)"
@@ -114,5 +113,4 @@ RSpec.describe 'Syntax Parser Test' do
       expect(ast_child.right.content).to eq("3")
     end
   end
-=end
 end
