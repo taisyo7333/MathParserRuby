@@ -1,2 +1,5 @@
 
 vendor/**/*
+
+Gemfile.lock
+spec/examples.txt
