@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 RSpec.describe 'Syntax Parser Test' do
@@ -194,6 +195,14 @@ RSpec.describe 'Syntax Parser Test' do
       ar = ast.to_a
       expect(ar).to eq([[:OP_MULTI,"*"],[[:OP_PLUS,"+"],[:INT,"1"],[:INT,"2"]],[:INT,"3"]])
 
+    end
+
+    it 'Make to_rpn' do
+      # 後置記法による出力
+      ast = @parser.parse()
+
+      pn = ast.to_rpn
+      expect(pn).to eq([[:INT,"1"],[:INT,"2"],[:OP_PLUS,"+"],[:INT,"3"],[:OP_MULTI,"*"]])
     end
   end
 end

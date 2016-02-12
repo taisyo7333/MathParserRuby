@@ -20,6 +20,11 @@ class Token
     return [@type,@content]
   end
 
+  def to_rpn(ar)
+    ar << to_a
+    return ar
+  end
+
   # Class method
   class << self
     def paren?(c)

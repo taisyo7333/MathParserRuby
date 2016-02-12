@@ -19,7 +19,17 @@ class Ast
   def to_a
     [@op.to_a , @left.to_a , @right.to_a]
   end
-
+  
+  # Postfix notation : 後置記法で出力
+  def to_rpn(ar=[])
+    # 木の探索:深さ優先探索
+    # leaf?
+    ar = @left.to_rpn(ar)
+    ar = @right.to_rpn(ar)
+    ar << @op.to_a
+    return ar 
+#    [@left.to_rpn , @right.to_rpn,@op.to_rpn ]
+  end
 end
 
 # 字句解析器
