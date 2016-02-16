@@ -23,7 +23,8 @@ class Ast
   # Postfix notation : 後置記法で出力
   def to_rpn(ar=[])
     # 木の探索:深さ優先探索
-    # leaf?
+    # leaf : Token
+    # node : Ast
     ar = @left.to_rpn(ar)
     ar = @right.to_rpn(ar)
     ar = @op.to_rpn(ar)
