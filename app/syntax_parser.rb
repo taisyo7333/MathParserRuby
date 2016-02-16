@@ -26,9 +26,8 @@ class Ast
     # leaf?
     ar = @left.to_rpn(ar)
     ar = @right.to_rpn(ar)
-    ar << @op.to_a
+    ar = @op.to_rpn(ar)
     return ar 
-#    [@left.to_rpn , @right.to_rpn,@op.to_rpn ]
   end
 end
 
