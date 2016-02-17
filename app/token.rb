@@ -9,11 +9,9 @@ class Token
     @content = c
     @type = map_type(c)
   end
-  #
-  def <=>(other)
-    return  0 if @type == other.type && @content == other.concent
-    return  1 if @type < other.type
-    return -1 
+  # comparison operator
+  def ==(other)
+    @type == other.type && @content == other.content
   end
 
   def to_a 

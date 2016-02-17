@@ -64,6 +64,21 @@ RSpec.describe 'Token' do
     end
   end
 
+  context 'Comparison' do
+    it 'Equal values' do
+      t = Token.new('-10.23')
+      expect(t).to eq Token.new('-10.23')
+    end
+    it 'Not equal value' do
+      t = Token.new('-10.23')
+      expect(t).not_to eq Token.new('-10.22')
+    end
+    it 'Not equal Int , Read' do
+      t = Token.new('1')
+      expect(t).not_to eq Token.new('1.0')      
+    end
+  end
+
   context 'Select Token code [Exception]' do
     it 'Raise Exception Cain in invalid character' do
       expect{ Token.new('@') }.to raise_error TokenError
